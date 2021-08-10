@@ -87,6 +87,7 @@ void Setup (DEM::Domain & dom, void * UD)
     UserData & dat = (*static_cast<UserData *>(UD));
     
     double scale = std::min(100.0*dom.Time/dat.Tf,1.0);
+    #pragma omp parallel for schedule(static) num_threads(dom.Nproc)
     for (size_t np=0;np<dom.Particles.Size();np++)
     {
         dom.Particles[np]->Ff = dom.Particles[np]->Props.m*Vec3_t(dat.g*sin(scale*dat.theta*M_PI/180.0),0.0,-dat.g*cos(scale*dat.theta*M_PI/180.0));
