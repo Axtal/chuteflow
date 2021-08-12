@@ -211,14 +211,16 @@ int main(int argc, char **argv) try
 
         Vec3_t X0(0.0,Xmax(1)+2*R,0.0);
         Vec3_t X1(0.0,Xmin(1)-2*R,0.0);
-        dom.AddPlane(-2,X0,R,1.3*Lx,1.3*Lz,3.0,0.5*M_PI,&OrthoSys::e0);
-        dom.AddPlane(-3,X1,R,1.3*Lx,1.3*Lz,3.0,0.5*M_PI,&OrthoSys::e0);
+        Vec3_t X2(0.0,0.0,Xmax(2)+2*R);
+        dom.AddPlane(-2,X0,R,2.0*Lx,2.0*Lz,3.0,0.5*M_PI,&OrthoSys::e0);
+        dom.AddPlane(-3,X1,R,2.0*Lx,2.0*Lz,3.0,0.5*M_PI,&OrthoSys::e0);
+        dom.AddPlane(-4,X2,R,2.0*Lx,2.0*Ly,3.0,0.0*M_PI,&OrthoSys::e0);
 
         X0 = Vec3_t(0.0,0.0,Xmin(2)-2*R);
         X1 = Vec3_t(0.0,0.0,Xmax(2)+2*R);
         //dom.AddPlane(-4,X0,R,1.3*Lx,1.3*Ly,3.0,0.0,&OrthoSys::e0);
         //dom.AddPlane(-5,X1,R,1.3*Lx,1.3*Ly,3.0,0.0,&OrthoSys::e0);
-        AddSawPlate(dom,-4,X0,Lx*2.0,2.0*Ly,8,Lx/4.0,3.0,R);
+        AddSawPlate(dom,-5,X0,Lx*2.0,2.0*Ly,8,Lx/6.0,3.0,R);
         //AddSawPlate(dom,-5,X1,Lx*2.0,2.0*Ly,8,Lx/4.0,3.0,R);
         //Quaternion_t q;
         //NormalizeRotation (M_PI,OrthoSys::e1,q);
@@ -234,12 +236,14 @@ int main(int argc, char **argv) try
     B1.Set(-1,"Kn Kt Gn Gt Mu Beta Eta",Kn,Kt,Gn,Gt ,Mu ,Beta,Eta);
     B1.Set(-2,"Kn Kt Gn Gt Mu Beta Eta",Kn,Kt,Gn,0.0,0.0,Beta,Eta);
     B1.Set(-3,"Kn Kt Gn Gt Mu Beta Eta",Kn,Kt,Gn,0.0,0.0,Beta,Eta);
-    B1.Set(-4,"Kn Kt Gn Gt Mu Beta Eta",Kn,Kt,Gn,0.0,Mu ,Beta,Eta);
+    B1.Set(-4,"Kn Kt Gn Gt Mu Beta Eta",Kn,Kt,Gn,0.0,0.0,Beta,Eta);
+    B1.Set(-5,"Kn Kt Gn Gt Mu Beta Eta",Kn,Kt,Gn,0.0,Mu ,Beta,Eta);
     dom.SetProps(B1);
 
     dom.GetParticle(-2)->FixVeloc();
     dom.GetParticle(-3)->FixVeloc();
     dom.GetParticle(-4)->FixVeloc();
+    dom.GetParticle(-5)->FixVeloc();
 
     String fkey_a  (filekey+"_a");
     String fkey_b  (filekey+"_b");
